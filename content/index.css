@@ -9,11 +9,20 @@
 .header {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 	font-size: 30px;
-	font: bold;
+	font-weight: bold;
+	color: #444;
 	margin: auto;
 	width: 1000px;
 	text-align: center;
 }
+
+h3 {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #666;
+}
+
 
 a {
 	font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
