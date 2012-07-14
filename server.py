@@ -12,7 +12,7 @@ def index():
 		return render_template('index.html')
 	if request.method == 'POST':
 		content = request.form['content']
-		publish(content)
+		return publish(content)
 
 if __name__ == "__main__":
 	app.run(debug = True)
