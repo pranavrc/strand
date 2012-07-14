@@ -1,9 +1,10 @@
-input {
+textarea {
 	border-radius: 10px /* creates rounded edges in some browsers */;
 	padding-left: 10px; /* creates a space between text and left border */;
+	padding-top: 10px;
 	width: 700px;
 	border: 1px solid #999;
-	height: 500px;
+	height: 300px;
 	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
@@ -11,10 +12,16 @@ input {
 
 .submitBtn {
 	width: 100px;
-	height: 25px;
+	height: 30px;
+	border-radius: 10px;
+	padding-left: 10px;
+	border: 1px solid #999;
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 }
 
-.myDiv {
+.pubContent {
 	border-radius: 10px;
 	padding: 10px;
 	border: 1px solid #999;

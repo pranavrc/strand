@@ -12,7 +12,6 @@ def index():
 	if request.method == 'POST':
 		content = request.form['content']
 		print content
-		return 'Foo'
 
 if __name__ == "__main__":
 	app.run(debug = True)
