@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<title>
+Add Content
+</title>
+
+<link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+<div class="formDiv">
+<form id="contentpush" action="/" onsubmit="return submitForm();">
+<input class="submitText" type="text" name="content" />
+<br />
+<br />
+<input class="submitBtn" type="submit" value="Publish" disabled="disabled" onClick="return submitForm();" />
+</form>
+</div>
+
+<hr />
+
+<div class="pubContent"></div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	function submitForm() {
+		$('div.pubContent').html('<img src="{{ url_for('static', filename='loader.gif') }}" alt="Publishing..." />'); 
+    		$.ajax({type:'POST', url: '/', data:$('#contentpush').serialize(), success: function(response) {
+        		$('div.pubContent').html(response);
+    		}});
+
+	    return false;
+       }
+
+       $(document).ready(function(){
+                jQuery(function($){
+	        $('.submitText').Watermark("Type Content to be published.");
+		});
+		
+    		$(".submitBtn").attr("disabled", "true");
+		$(".submitText").keyup(function(){
+	        if ($(this).val() != "") {
+        	    $(".submitBtn").removeAttr("disabled");
+	        } else {
+	            $(".submitBtn").attr("disabled", "true");        
+	        }
+		});   
+	});
+	/*]]>*/
+</script>
+
+</body>
+</html>
