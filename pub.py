@@ -2,16 +2,19 @@ import fileinput
 import datetime
 from flask import *
 import os
+import sys
 
 def contentDump(content, outfile):
 	insertContent = False
+	delimiter = '<!--Delimiter-->'
 	for line in fileinput.input(outfile, inplace=1):
-	  if line.startswith('<div class="content">'):
+	  if delimiter in line:
 	    insertContent = True
-	  else:
 	    if insertContent:
-	      print '<hr /><p>' + content + '<br /><div class="date">' + str(datetime.datetime.now()) + '</div></p>'
+	      line = line.replace(delimiter, '<hr /><p>' + content + '<br /><div class="date">' + str(datetime.datetime.now()) + '</div></p>' + delimiter)
+	      sys.stdout.write(line)
 	    insertContent = False
+	    continue
 	  print line,
 
 def strandize():
