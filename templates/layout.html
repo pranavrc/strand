@@ -30,10 +30,12 @@ Add Content
 <script type="text/javascript">
 	/*<![CDATA[*/
 	function submitForm() {
-		$('div.pubContent').html('<img src="{{ url_for('static', filename='loader.gif') }}" alt="Publishing..." />');
-		$.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=False", success: function(response) {
+		if (confirm("Sure?")) {
+		  $('div.pubContent').html('<img src="{{ url_for('static', filename='loader.gif') }}" alt="Publishing..." />');
+		  $.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=False", success: function(response) {
 			  $('div.pubContent').html(response);
-		}});
+		  }});
+		}
 	    return false;
        }
 
