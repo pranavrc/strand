@@ -24,7 +24,11 @@ def strandize():
 
 def publish(content, preview):
 	if preview:
+		indexContent = open('templates/index.html', 'r').read()
+		with open('templates/preview.html', 'w') as previewFile:
+			previewFile.write(indexContent)
 		contentDump(content, 'templates/preview.html')
+		previewFile.close()
 		return '<a href="%s" target="_blank">Preview</a>' % url_for('show_preview')
 	else:
 		contentDump(content, 'templates/index.html')
