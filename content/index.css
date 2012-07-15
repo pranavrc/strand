@@ -42,3 +42,8 @@ hr {
 	background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,0)); 
 	background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,0));
 }
+
+.date {
+	font-size:12px;
+	font-style: italic;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<title>
+Add Content
+</title>
+<meta charset="utf-8">
+<link href="{{ url_for('static', filename='layout.css') }}" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+<div class="formDiv">
+<form id="contentpush" action="/" onsubmit="return submitForm();">
+<textarea class="submitText" name="content"></textarea>
+<br />
+<br />
+<input class="previewBtn" type="submit" value="Preview" disabled="disabled" />
+<input class="submitBtn" type="submit" value="Publish" disabled="disabled" onClick="return submitForm();" />
+</form>
+</div>
+<hr />
+
+<div class="pubContent"></div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	function submitForm() {
+		$('div.pubContent').html('<img src="{{ url_for('static', filename='loader.gif') }}" alt="Publishing..." />');
+		$.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=False", success: function(response) {
+			  $('div.pubContent').html(response);
+		}});
+	    return false;
+       }
+
+	$(document).ready(function(){
+		$('input[class=previewBtn]').click(function(){
+			$.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=True", success: function(response) {
+			  $('div.pubContent').html(response);
+		  }});
+		  return false;
+		});
+
+                jQuery(function($){
+	        $('.submitText').Watermark("Type Content to be published.");
+		});
+		
+    		$(".submitBtn, .previewBtn").attr("disabled", "true");
+		$(".submitText").keyup(function(){
+	        if ($(this).val() != "") {
+        	    $(".submitBtn, .previewBtn").removeAttr("disabled");
+	        } else {
+	            $(".submitBtn, .previewBtn").attr("disabled", "true");        
+	        }
+		});   
+	});
+	/*]]>*/
+</script>
+
+</body>
+</html>
