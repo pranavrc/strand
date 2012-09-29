@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<title>Patterned Disruption of Silence</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<div class="header"><p>Patterned Disruption of Silence</p></div>
+<div class="content">
+<hr /><p><p><h3><a href="#figure_and_ground">Silence as Ground</a></h3>
+
+<a href="http://en.wikipedia.org/wiki/Figure%E2%80%93ground_%28perception%29">Figure and Ground</a> in Music makes sense when Silence is perceived as Ground and the disrupting Musical Notes, as Figures. You can have a set of random frequencies at random intervals pierce through the quietude, but that doesn't really tie the whole thing together. Music <i>has</i> to be patterned. It has to be a <i>Patterned Disruption of Silence</i>.<br /><br />
+
+This way, the concept of Music boils down to a series of frequencies related by <i>scales</i>, spaced out in a pattern, determined by the <i>Time Signature</i>. A set of (usually)repeating or non-repeating beats gives us a <i>Bar</i>.<br /><br />
+
+Jargon aside, the point is, patterns are cogs in the device that is Music. Now, if we hook up Sound to a source of patterns, we have a self-sustaining system that generates Music. Algorithms generally spew out patterns. All that's needed to get sound to acknowledge algorithmic patterns is a language that's common to both. Numbers. <i>Numerical Patterns.</i><br /><br />
+
+Exciting, the prospect of finding out how algorithms actually <i>sound</i>.<br /><br /><div class="date">2012-07-29 23:26:53.700287</div></p><hr /><p><p><h3><a href="#sorting_algorithms">Sorting Algorithms</a></h3>
+
+Deciding to start off with a few sorting algorithms, I ended up mapping insertion sort, selection sort and bubble sort to sound. I chose C for this exercise, and will be sticking to it, since I have a stable workflow (<a href="http://www.portaudio.com/">Portaudio</a> for playback and <a href="http://www.mega-nerd.com/libsndfile/">libsndfile</a> for dumping frequencies to a file) going on now.
+
+As for the implementation, check out the code <a href="http://github.com/pranavrc/PDoS/">here</a>. In short, for every step in the sorting algorithm (this includes traversing over an array element, and also swapping):
+<ul>
+<li>I take the value dealt with (typically one value in the unordered list for a traversal, and two for a swap),</li>
+<li>multiply the value(s) with a scaling factor (such as 200) so that the frequencies are actually audible,</li><li>assign a play time for each frequency (such as 100 ms),</li><li>play the frequencies with portaudio,</li><li>populate a new list with all these frequencies in chronological order,</li><li>dump the frequencies to a wav file in the same order.</li>
+</ul>
+
+The sounds that these algorithms threw up are beautifully patterned. One of them even has intertwining ascending and descending motifs, and another a crescendo-like progression.<br /><br /><div class="date">2012-07-29 23:50:50.730925</div></p><hr /><p><p><h3><a href="#the_sounds">The sounds of sorting</a></h3>
+(Note: You might want to lower your volume before you click on the play buttons, the frequencies are quite loud.)<br /><br />
+Insertion Sort: 
+
+<audio controls="controls">
+  <source src="sounds/insertionSort.ogg" type="audio/ogg" />
+  Your browser does not support the audio element.
+</audio><br /><br />
+
+Selection Sort:
+
+<audio controls="controls">
+  <source src="sounds/selectionSort.ogg" type="audio/ogg" />
+  Your browser does not support the audio element.
+</audio><br /><br />
+
+Bubble Sort:   
+
+<audio controls="controls">
+  <source src="sounds/bubbleSort.ogg" type="audio/ogg" />
+  Your browser does not support the audio element.
+</audio></p><br /><br /><div class="date">2012-07-30 05:29:34.052418</div></p><!--Delimiter-->
+</div>
+
+<hr />
+<p style="text-align:center;">
+<a href="http://github.com/pranavrc/PDoS/" onclick="window.open(this.href);return false;">The Code</a> | <a href="http://onloop.net/" onclick="window.open(this.href);return false;">Blog</a> | <a href="http://github.com/pranavrc/strand/" onclick="window.open(this.href);return false;">Published with Strand</a> | <a href="mailto:me@onloop.net">Mail</a>
+</p>
+</body>
+</html>
+

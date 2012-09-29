@@ -11,7 +11,7 @@ def contentDump(content, outfile):
 	  if delimiter in line:
 	    insertContent = True
 	    if insertContent:
-	      line = line.replace(delimiter, '<hr /><p>' + content + '<br /><div class="date">' + str(datetime.datetime.now()) + '</div></p>' + delimiter)
+	      line = line.replace(delimiter, '<hr /><p>' + content + '<br /><br /><div class="date">' + str(datetime.datetime.now()) + '</div></p>' + delimiter)
 	      sys.stdout.write(line)
 	    insertContent = False
 	    continue
@@ -20,7 +20,8 @@ def contentDump(content, outfile):
 def strandize():
 	destIP = str(raw_input("User@IP: "))
 	destAdd = str(raw_input("Blog Directory(absolute path): "))
-	os.system("scp content/index.html content/index.css " + destIP + ":" + destAdd);
+	os.system("cp content/index.html content/backup.html")
+	os.system("scp content/index.html content/index.css " + destIP + ":" + destAdd)
 
 def publish(content, preview):
 	if preview:
