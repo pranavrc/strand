@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Strand - Login.</title>
+<link href="{{url_for('static',filename='login.css')}}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<form method="POST" action="/login">
+  <div align="center">
+  <fieldset>
+  <p>
+  <h3>Strand - Login.</h3><hr />
+  <input type="text" name="username" placeholder="Username" size="15" /><br /><br />
+  <input type="password" name="password" placeholder="Password" size="15" /><br /><br />
+  <input type="submit" value="Login" /></p>
+  </fieldset>
+  </div>
+</form>
+
+</body>
+</html>
