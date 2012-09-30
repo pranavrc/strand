@@ -42,10 +42,14 @@ class Blog(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.Text)
 	url = db.Column(db.String(100), unique = True)
+	description = db.Column(db.Text)
+	bloglayout = db.Column(db.Boolean, unique = False)
 
-	def __init__(self, title, url):
+	def __init__(self, title, url, bloglayout, description):
 		self.title = title
 		self.url = url
+		self.bloglayout = bloglayout
+		self.description = description
 
 	def __repr__(self):
 		return '%r' % self.url
