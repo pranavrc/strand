@@ -9,6 +9,7 @@ app = Flask(__name__, template_folder = 'templates')
 DB_URI = 'tmp/data.db'
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, DB_URI)
+app.secret_key = ';HX)JW&FD;pN~G+EBRkPuXg}Hw><h9-7hBd&:9b!n|:HGQ*I,+Bc:Z6xmC V=|CQ'
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -21,7 +22,7 @@ class User(db.Model):
 		self.password = password
 
 	def __repr__(self):
-		return '<User %r>' % self.username
+		return '%r' % self.username
 
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
@@ -35,4 +36,4 @@ class Post(db.Model):
 		self.pub_date = pub_date
 
 	def __repr__(self):
-		return '<Post %r>' % self.body
+		return '%r' % self.body
