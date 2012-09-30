@@ -15,6 +15,7 @@ class Data:
 	
 		self.title = str(raw_input("Blog title? "))
 		self.desc = str(raw_input("Blog Description? "))
+		self.blogurl = str(raw_input("Blog URL Name? Eg: strand (http://yourdomain.com/strand/) "))
 
 		while True:
 			self.layout = str(raw_input("Bottom-to-Top (press y) or Top-to-Bottom (press n)? (Default: Bottom to Top) "))
@@ -45,5 +46,9 @@ if __name__ == "__main__":
 	db.create_all()
 	user = User(a.username, a.password)
 	db.session.add(user)
+	blog = Blog(a.title, a.blogurl)
+	db.session.add(blog)
 	db.session.commit()
 	print User.query.all()
+	print str(Blog.query.all()[0])
+	print type(str(Blog.query.all()[0]))
