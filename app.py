@@ -4,6 +4,9 @@ from flask import *
 from pub import *
 from setup import *
 
+preview = None
+content = None
+
 @app.route("/login", methods = ['GET','POST'])
 
 def login():
@@ -12,7 +15,7 @@ def login():
 	if request.method == 'POST':
 		usern = request.form['username']
 		passw = request.form['password']
-		
+
 		if User.query.filter_by(username = usern).first():
 			if User.query.filter_by(password = passw).first():
 				flash('Successful login.')
@@ -43,17 +46,27 @@ def layout():
 			post = Post(content)
 			db.session.add(post)
 			db.session.commit()
-		
-		return 'Pubbed'
+
+		return '<a href="%s" target="_blank">Published</a>' % url_for('index')
 		#if preview == 'True':
 		#	return publish(content, True)
 		#return publish(content, False)
 
 for blog in Blog.query.all():
-	@app.route("/" + str(blog), methods = ['GET'])
+	@app.route("/" + blog.url, methods = ['GET'])
 
 	def index():
-		return render_template('index.html', blogtitle='hi', posts = Post.query.all())
+		contentPosts = Post.query.all()
+		
+		if blog.bloglayout:
+			contentPosts.reverse()
+
+		previewPosts = contentPosts.append(content)
+
+		if preview:
+			return render_template('index.html', blogtitle = blog.title, blogdescription = blog.description, posts = previewPosts)
+		else:
+			return render_template('index.html', blogtitle = blog.title, blogdescription = blog.description, posts = contentPosts)
 
 @app.route("/preview")
 
