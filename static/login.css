@@ -1,6 +1,6 @@
 input {
 	margin: auto;
-	border-radius: 10px; /* creates rounded edges in some browsers */
+	border-radius: 2px; /* creates rounded edges in some browsers */
 	padding-left: 10px; /* creates a space between text and left border */
 	width: 275px;
 	border: 1px solid #999;
