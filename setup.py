@@ -46,9 +46,11 @@ if __name__ == "__main__":
 	db.create_all()
 	user = User(a.username, a.password)
 	db.session.add(user)
-	blog = Blog(a.title, a.blogurl)
+	blog = Blog(a.title, a.blogurl, a.layout, a.desc)
 	db.session.add(blog)
 	db.session.commit()
-	print User.query.all()
+	abc = User.query.all()
+	print abc
 	print str(Blog.query.all()[0])
 	print type(str(Blog.query.all()[0]))
+	print blog.url
