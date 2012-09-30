@@ -37,3 +37,15 @@ class Post(db.Model):
 
 	def __repr__(self):
 		return '%r' % self.body
+
+class Blog(db.Model):
+	id = db.Column(db.Integer, primary_key = True)
+	title = db.Column(db.Text)
+	url = db.Column(db.String(100), unique = True)
+
+	def __init__(self, title, url):
+		self.title = title
+		self.url = url
+
+	def __repr__(self):
+		return '%r' % self.url
