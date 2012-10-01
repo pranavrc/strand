@@ -17,13 +17,22 @@ Add Content
 <textarea class="submitText" name="content"></textarea>
 <br />
 <br />
+<select class = "selectlist">
+	{% for blog in blogs %}
+	<option value="{{blog.url}}">{{blog.url}}</option>
+	{% endfor %}
+</select>
+<br /><br />
 <input class="previewBtn" type="submit" value="Preview" disabled="disabled" />
 <input class="submitBtn" type="submit" value="Publish" disabled="disabled" onClick="return submitForm();" />
 </form>
 </div>
-<hr />
-
+<br />
 <div class="pubContent"></div>
+<hr />
+<p style="text-align:center;">
+<a href="/add" target="_blank">Add Page</a>
+</p>
 
 <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script>
