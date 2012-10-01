@@ -28,12 +28,23 @@ def login():
 
 		return render_template('login.html', error = error)
 
+@app.route("/add", methods = ['GET','POST'])
+
+def addPage():
+	if request.method == 'GET':
+		return render_template('addpage.html')
+	if request.method == 'POST':
+		blogurlinput = request.form['blogurlinput']
+		blogtitleinput = request.form['blogtitleinput']
+		blogdescinput = request.form['blogdescinput']
+		return blogurlinput + ' ' + blogtitleinput + ' ' + blogdescinput
+
 @app.route("/", methods = ['GET','POST'])
 
 def layout():
 	if request.method == 'GET':
 		if 'username' in session:
-			return render_template('layout.html')
+			return render_template('layout.html', blogs = Blog.query.all())
 		else:
 			return redirect(url_for('login'))
 	if request.method == 'POST':

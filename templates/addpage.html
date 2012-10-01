@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Strand - Add Page.</title>
+<link href="{{url_for('static',filename='login.css')}}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<form method="POST" action="/add">
+  <div align="center">
+  <fieldset>
+  <p>
+  <h3>Strand - Add Page.</h3><hr />
+  <input type="text" name="blogurlinput" placeholder="Blog URL" size="30" /><br /><br />
+  <input type="text" name="blogtitleinput" placeholder="Blog Title" size="30" /><br /><br />
+  <input type="text" name="blogdescinput" placeholder="Blog Description" size="30" /><br /><br />
+  <input type="submit" value="Add" /></p>
+  </fieldset>
+  </div>
+</form>
+
+</body>
+</html>
