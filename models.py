@@ -28,6 +28,7 @@ class Post(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	body = db.Column(db.Text)
 	pub_date = db.Column(db.DateTime)
+	blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
 
 	def __init__(self, body, pub_date = None):
 		self.body = body
@@ -44,6 +45,7 @@ class Blog(db.Model):
 	url = db.Column(db.String(100), unique = True)
 	description = db.Column(db.Text)
 	bloglayout = db.Column(db.Boolean, unique = False)
+	posts = db.relationship('Post', backref = 'blog', lazy = 'dynamic')
 
 	def __init__(self, title, url, bloglayout, description):
 		self.title = title
