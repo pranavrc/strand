@@ -1,4 +1,4 @@
-input {
+input, .selectlayout {
 	margin: auto;
 	border-radius: 2px; /* creates rounded edges in some browsers */
 	padding-left: 10px; /* creates a space between text and left border */

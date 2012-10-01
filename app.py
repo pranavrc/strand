@@ -37,7 +37,11 @@ def addPage():
 		blogurlinput = request.form['blogurlinput']
 		blogtitleinput = request.form['blogtitleinput']
 		blogdescinput = request.form['blogdescinput']
-		return blogurlinput + ' ' + blogtitleinput + ' ' + blogdescinput
+		bloglayoutinput = request.form['bloglayoutinput']
+		db.session.add(Blog(blogtitleinput, blogurlinput, bloglayoutinput, blogdescinput))
+		db.session.commit()
+		print Blog.query.all()
+		return 'foo'
 
 @app.route("/", methods = ['GET','POST'])
 
