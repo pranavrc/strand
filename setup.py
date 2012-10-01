@@ -50,7 +50,3 @@ if __name__ == "__main__":
 	db.session.add(blog)
 	db.session.commit()
 	abc = User.query.all()
-	print abc
-	print str(Blog.query.all()[0])
-	print type(str(Blog.query.all()[0]))
-	print blog.url
