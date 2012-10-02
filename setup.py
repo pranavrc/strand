@@ -34,7 +34,7 @@ if __name__ == "__main__":
 		confirm = str(raw_input("User Database exists already. Do you want to re-configure? This will erase your current database configuration. Confirm (y/n) "))
 		while True:
 			if confirm == 'y' or confirm == 'Y':
-				os.remove(DB_URI)
+				db.drop_all()	
 				break
 			elif confirm == 'n' or confirm == 'N':
 				sys.exit(1)

@@ -40,7 +40,7 @@ def addPage():
 		bloglayoutinput = request.form['bloglayoutinput']
 		db.session.add(Blog(blogtitleinput, blogurlinput, bloglayoutinput, blogdescinput))
 		db.session.commit()
-		return 'foo'
+		return render_template('addpage.html', added = blogurlinput)
 
 @app.route("/", methods = ['GET','POST'])
 
@@ -76,17 +76,15 @@ def layout():
 def index(blogurl):
 	if not blogurl:
 		return
+
 	eachblog = Blog.query.filter_by(url = blogurl).first()
 	contentPosts = eachblog.posts.all()
 		
 	if eachblog.bloglayout:
 		contentPosts.reverse()
 	
-	print type(contentPosts)
 	previewPosts = contentPosts
-	print previewPosts
 	previewPosts.append(content)
-	print previewPosts
 
 	if preview:
 		return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = previewPosts)
@@ -106,6 +104,10 @@ def show_pubbed():
 @app.errorhandler(404)
 def not_found(error):
 	return redirect('https://www.google.co.in/search?q=404')
+
+@app.teardown_request
+def shutdown_session(exception=None):
+    db.session.remove()
 
 if __name__ == "__main__":
 	app.run(debug = True)
