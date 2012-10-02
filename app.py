@@ -54,22 +54,17 @@ def layout():
 		content = request.form['content']
 		preview = request.form['preview']
 		blogtopostto = request.form['listofblogs']
-		
-		#if preview:
-		#	return '<a href="%s" target="_blank">Preview</a>' % url_for('index', blogurl = blogtopostto)
 
-		if not content:
-			return 'Content Empty.'
-		else:
-			blog = Blog.query.filter_by(url = blogtopostto).first()
-			post = Post(content, blog.url)
-			db.session.add(post)
-			db.session.commit()
+		if str(preview) == 'True':
+			preview = False
+			return render_template('preview.html', body = content, pub_date = datetime.utcnow())
+
+		blog = Blog.query.filter_by(url = blogtopostto).first()
+		post = Post(content, blog.url)
+		db.session.add(post)
+		db.session.commit()
 
 		return '<a href="%s" target="_blank">Published</a>' % url_for('index', blogurl = blogtopostto)
-		#if preview == 'True':
-		#	return publish(content, True)
-		#return publish(content, False)
 
 @app.route("/<blogurl>", methods = ['GET'])
 
@@ -83,23 +78,7 @@ def index(blogurl):
 	if eachblog.bloglayout:
 		contentPosts.reverse()
 	
-	previewPosts = contentPosts
-	previewPosts.append(content)
-
-	if preview:
-		return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = previewPosts)
-	else:
-		return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
-
-@app.route("/preview")
-
-def show_preview():
-	return render_template('preview.html')
-
-@app.route("/pubbed")
-
-def show_pubbed():
-	return render_template('layout.html')
+	return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
 
 @app.errorhandler(404)
 def not_found(error):
