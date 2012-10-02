@@ -28,10 +28,11 @@ class Post(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	body = db.Column(db.Text)
 	pub_date = db.Column(db.DateTime)
-	blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+	blog_url = db.Column(db.Text, db.ForeignKey('blog.url'))
 
-	def __init__(self, body, pub_date = None):
+	def __init__(self, body, blog_url, pub_date = None):
 		self.body = body
+		self.blog_url = blog_url
 		if pub_date is None:
 			pub_date = datetime.utcnow()
 		self.pub_date = pub_date
