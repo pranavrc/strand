@@ -55,8 +55,8 @@ def layout():
 		preview = request.form['preview']
 		blogtopostto = request.form['listofblogs']
 		
-		if preview:
-			return '<a href="%s" target="_blank">Preview</a>' % url_for('index', blogurl = blogtopostto)
+		#if preview:
+		#	return '<a href="%s" target="_blank">Preview</a>' % url_for('index', blogurl = blogtopostto)
 
 		if not content:
 			return 'Content Empty.'
