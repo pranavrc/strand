@@ -40,7 +40,6 @@ def addPage():
 		bloglayoutinput = request.form['bloglayoutinput']
 		db.session.add(Blog(blogtitleinput, blogurlinput, bloglayoutinput, blogdescinput))
 		db.session.commit()
-		print Blog.query.all()
 		return 'foo'
 
 @app.route("/", methods = ['GET','POST'])
@@ -55,38 +54,44 @@ def layout():
 		content = request.form['content']
 		preview = request.form['preview']
 		blogtopostto = request.form['listofblogs']
+		
+		if preview:
+			return '<a href="%s" target="_blank">Preview</a>' % url_for('index', blogurl = blogtopostto)
 
 		if not content:
 			return 'Content Empty.'
 		else:
 			blog = Blog.query.filter_by(url = blogtopostto).first()
-			print blog
 			post = Post(content, blog.url)
-			print post.blog
 			db.session.add(post)
 			db.session.commit()
-			print blog.posts.all()
 
-		return '<a href="%s" target="_blank">Published</a>' % url_for('index')
+		return '<a href="%s" target="_blank">Published</a>' % url_for('index', blogurl = blogtopostto)
 		#if preview == 'True':
 		#	return publish(content, True)
 		#return publish(content, False)
 
-for eachblog in Blog.query.all():
-	@app.route("/" + eachblog.url, methods = ['GET'])
+@app.route("/<blogurl>", methods = ['GET'])
 
-	def index():
-		contentPosts = Post.query.all()
+def index(blogurl):
+	if not blogurl:
+		return
+	eachblog = Blog.query.filter_by(url = blogurl).first()
+	contentPosts = eachblog.posts.all()
 		
-		if eachblog.bloglayout:
-			contentPosts.reverse()
+	if eachblog.bloglayout:
+		contentPosts.reverse()
+	
+	print type(contentPosts)
+	previewPosts = contentPosts
+	print previewPosts
+	previewPosts.append(content)
+	print previewPosts
 
-		previewPosts = contentPosts.append(content)
-
-		if preview:
-			return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = previewPosts)
-		else:
-			return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
+	if preview:
+		return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = previewPosts)
+	else:
+		return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
 
 @app.route("/preview")
 
