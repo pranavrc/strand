@@ -54,34 +54,39 @@ def layout():
 	if request.method == 'POST':
 		content = request.form['content']
 		preview = request.form['preview']
+		blogtopostto = request.form['listofblogs']
 
 		if not content:
 			return 'Content Empty.'
 		else:
-			post = Post(content)
+			blog = Blog.query.filter_by(url = blogtopostto).first()
+			print blog
+			post = Post(content, blog.url)
+			print post.blog
 			db.session.add(post)
 			db.session.commit()
+			print blog.posts.all()
 
 		return '<a href="%s" target="_blank">Published</a>' % url_for('index')
 		#if preview == 'True':
 		#	return publish(content, True)
 		#return publish(content, False)
 
-for blog in Blog.query.all():
-	@app.route("/" + blog.url, methods = ['GET'])
+for eachblog in Blog.query.all():
+	@app.route("/" + eachblog.url, methods = ['GET'])
 
 	def index():
 		contentPosts = Post.query.all()
 		
-		if blog.bloglayout:
+		if eachblog.bloglayout:
 			contentPosts.reverse()
 
 		previewPosts = contentPosts.append(content)
 
 		if preview:
-			return render_template('index.html', blogtitle = blog.title, blogdescription = blog.description, posts = previewPosts)
+			return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = previewPosts)
 		else:
-			return render_template('index.html', blogtitle = blog.title, blogdescription = blog.description, posts = contentPosts)
+			return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
 
 @app.route("/preview")
 
