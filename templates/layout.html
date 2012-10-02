@@ -14,7 +14,7 @@ Add Content
 
 <div class="formDiv">
 <form id="contentpush" action="/" onsubmit="return submitForm();">
-<textarea class="submitText" name="content"></textarea>
+<textarea class="submitText" name="content" placeholder="Type Content."></textarea>
 <br />
 <br />
 <select class="selectlist" name="listofblogs">
@@ -35,7 +35,7 @@ Add Content
 </p>
 
 <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script>
+<!--script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script-->
 <script type="text/javascript">
 	/*<![CDATA[*/
 	function submitForm() {
@@ -56,9 +56,9 @@ Add Content
 		  return false;
 		});
 
-                jQuery(function($){
+                /*jQuery(function($){
 	        $('.submitText').Watermark("Type Content to be published.");
-		});
+		});*/
 		
     		$(".submitBtn, .previewBtn").attr("disabled", "true");
 		$(".submitText").keyup(function(){
