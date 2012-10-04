@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Strand - Remove Page.</title>
+<link href="{{url_for('static',filename='login.css')}}" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function confirmSubmission(form) {
+	if (confirm("Sure?")) {
+		form.submit();
+	} else {
+		return false;
+	}
+}
+</script>
+</head>
+
+<body>
+
+<form method="POST" action="/remove">
+  <div align="center">
+  <fieldset>
+  <p>
+  <h3>Strand - Remove Page.</h3><hr />
+  <select class="selectlist" name="blogtoremove">
+	  {% for blog in blogs %}
+	  <option value="{{blog.url}}">{{blog.url}}</option>
+	  {% endfor %}
+  </select><br /><br />
+  <input type="submit" value="Remove" onClick="return confirmSubmission(this.form);" /></p>
+  <p><a href="{{ removed }}" target="_blank">{{removed}}</a></p>
+  </fieldset>
+  </div>
+</form>
+
+</body>
+</html>
