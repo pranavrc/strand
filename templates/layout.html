@@ -62,7 +62,7 @@ Add Content
 		
     		$(".submitBtn, .previewBtn").attr("disabled", "true");
 		$(".submitText").keyup(function(){
-	        if ($(this).val() != "") {
+	        if (($(this).val() != "") && $('.selectlist').val()) {
         	    $(".submitBtn, .previewBtn").removeAttr("disabled");
 	        } else {
 	            $(".submitBtn, .previewBtn").attr("disabled", "true");        
