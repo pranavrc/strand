@@ -28,11 +28,25 @@ function confirmSubmission(form) {
 	  <option value="{{blog.url}}">{{blog.url}}</option>
 	  {% endfor %}
   </select><br /><br />
-  <input type="submit" value="Remove" onClick="return confirmSubmission(this.form);" /></p>
+  <input class="removeBtn" type="submit" disabled="disabled" value="Remove" onClick="return confirmSubmission(this.form);" /></p>
   <p><a href="{{ removed }}" target="_blank">{{removed}}</a></p>
   </fieldset>
   </div>
 </form>
+
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	$(document).ready(function(){
+    		$(".removeBtn").attr("disabled", "true");
+	        if ($('.selectlist').val()) {
+        	    $(".removeBtn").removeAttr("disabled");
+	        } else {
+	            $(".removeBtn").attr("disabled", "true");        
+	        }
+	});
+	/*]]>*/
+</script>
 
 </body>
 </html>
