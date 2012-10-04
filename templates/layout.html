@@ -6,7 +6,7 @@
 Add Content
 </title>
 <meta charset="utf-8">
-<link href="{{ url_for('static', filename='layout.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{url_for('static',filename='layout.css')}}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -34,13 +34,13 @@ Add Content
 <a href="/add" target="_blank">Add Page</a> | <a href="/remove" target="_blank">Remove Page</a>
 </p>
 
-<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='jquery-1.7.2.js')}}"></script>
 <!--script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script-->
 <script type="text/javascript">
 	/*<![CDATA[*/
 	function submitForm() {
 		if (confirm("Sure?")) {
-		  $('div.pubContent').html('<img src="{{ url_for('static', filename='loader.gif') }}" alt="Publishing..." />');
+		  $('div.pubContent').html('<img src="{{url_for('static',filename='loader.gif')}}" alt="Publishing..." />');
 		  $.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=False", success: function(response) {
 			  $('div.pubContent').html(response);
 		  }});
@@ -59,15 +59,15 @@ Add Content
                 /*jQuery(function($){
 	        $('.submitText').Watermark("Type Content to be published.");
 		});*/
-		
+
     		$(".submitBtn, .previewBtn").attr("disabled", "true");
 		$(".submitText").keyup(function(){
 	        if (($(this).val() != "") && $('.selectlist').val()) {
         	    $(".submitBtn, .previewBtn").removeAttr("disabled");
 	        } else {
-	            $(".submitBtn, .previewBtn").attr("disabled", "true");        
+	            $(".submitBtn, .previewBtn").attr("disabled", "true");
 	        }
-		});   
+		});
 	});
 	/*]]>*/
 </script>

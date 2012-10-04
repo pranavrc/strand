@@ -12,7 +12,7 @@ class Data:
 			self.confPass = str(raw_input("Confirm your password: "))
 			if self.confPass == self.password:
 				break
-	
+
 		self.title = str(raw_input("Blog title? "))
 		self.desc = str(raw_input("Blog Description? "))
 		self.blogurl = str(raw_input("Blog URL Name? Eg: strand (http://yourdomain.com/strand/) "))
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 		confirm = str(raw_input("User Database exists already. Do you want to re-configure? This will erase your current database configuration. Confirm (y/n) "))
 		while True:
 			if confirm == 'y' or confirm == 'Y':
-				db.drop_all()	
+				db.drop_all()
 				break
 			elif confirm == 'n' or confirm == 'N':
 				sys.exit(1)

@@ -72,7 +72,7 @@ def layout():
 		content = request.form['content']
 		preview = request.form['preview']
 		blogtopostto = request.form['listofblogs']
-		
+
 		if str(preview) == 'True':
 			preview = False
 			return render_template('preview.html', body = content, pub_date = datetime.utcnow())
@@ -88,14 +88,14 @@ def layout():
 
 def index(blogurl):
 	if not Blog.query.filter_by(url = blogurl).first():
-		return redirect('https://www.google.com/search?q=404') 
+		return redirect('https://www.google.com/search?q=404')
 
 	eachblog = Blog.query.filter_by(url = blogurl).first()
 	contentPosts = eachblog.posts.all()
-		
+
 	if eachblog.bloglayout:
 		contentPosts.reverse()
-	
+
 	return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
 
 @app.errorhandler(404)

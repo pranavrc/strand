@@ -29,12 +29,12 @@ function confirmSubmission(form) {
 	  {% endfor %}
   </select><br /><br />
   <input class="removeBtn" type="submit" disabled="disabled" value="Remove" onClick="return confirmSubmission(this.form);" /></p>
-  <p><a href="{{ removed }}" target="_blank">{{removed}}</a></p>
+  <p><a href="{{removed}}" target="_blank">{{removed}}</a></p>
   </fieldset>
   </div>
 </form>
 
-<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.2.js') }}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='jquery-1.7.2.js')}}"></script>
 <script type="text/javascript">
 	/*<![CDATA[*/
 	$(document).ready(function(){
@@ -42,7 +42,7 @@ function confirmSubmission(form) {
 	        if ($('.selectlist').val()) {
         	    $(".removeBtn").removeAttr("disabled");
 	        } else {
-	            $(".removeBtn").attr("disabled", "true");        
+	            $(".removeBtn").attr("disabled", "true");
 	        }
 	});
 	/*]]>*/
