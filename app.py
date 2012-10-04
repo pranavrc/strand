@@ -42,6 +42,17 @@ def addPage():
 		db.session.commit()
 		return render_template('addpage.html', added = blogurlinput)
 
+@app.route("/remove", methods = ['GET', 'POST'])
+
+def removePage():
+	if request.method == 'GET':
+		return render_template('removepage.html', blogs = Blog.query.all())
+	if request.method == 'POST':
+		blogtoremove = request.form['blogtoremove']
+		db.session.delete(Blog.query.filter_by(url = blogtoremove).first())
+		db.session.commit()
+		return render_template('removepage.html', removed = blogtoremove)
+
 @app.route("/", methods = ['GET','POST'])
 
 def layout():
@@ -54,7 +65,7 @@ def layout():
 		content = request.form['content']
 		preview = request.form['preview']
 		blogtopostto = request.form['listofblogs']
-
+		
 		if str(preview) == 'True':
 			preview = False
 			return render_template('preview.html', body = content, pub_date = datetime.utcnow())
@@ -69,8 +80,8 @@ def layout():
 @app.route("/<blogurl>", methods = ['GET'])
 
 def index(blogurl):
-	if not blogurl:
-		return
+	if not Blog.query.filter_by(url = blogurl).first():
+		return redirect('https://www.google.com/search?q=404') 
 
 	eachblog = Blog.query.filter_by(url = blogurl).first()
 	contentPosts = eachblog.posts.all()
@@ -81,10 +92,12 @@ def index(blogurl):
 	return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts)
 
 @app.errorhandler(404)
+
 def not_found(error):
-	return redirect('https://www.google.co.in/search?q=404')
+	return redirect('https://www.google.com/search?q=404')
 
 @app.teardown_request
+
 def shutdown_session(exception=None):
     db.session.remove()
 
