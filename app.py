@@ -35,6 +35,8 @@ def addPage():
 		return render_template('addpage.html')
 	if request.method == 'POST':
 		blogurlinput = request.form['blogurlinput']
+		if not blogurlinput:
+			return render_template('addpage.html', added = 'URL cannot be empty')
 		blogtitleinput = request.form['blogtitleinput']
 		blogdescinput = request.form['blogdescinput']
 		bloglayoutinput = request.form['bloglayoutinput']
@@ -51,7 +53,7 @@ def removePage():
 		blogtoremove = request.form['blogtoremove']
 		db.session.delete(Blog.query.filter_by(url = blogtoremove).first())
 		db.session.commit()
-		return render_template('removepage.html', removed = blogtoremove)
+		return render_template('removepage.html', blogs = Blog.query.all(), removed = blogtoremove)
 
 @app.route("/", methods = ['GET','POST'])
 
