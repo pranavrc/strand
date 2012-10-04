@@ -35,8 +35,13 @@ def addPage():
 		return render_template('addpage.html')
 	if request.method == 'POST':
 		blogurlinput = request.form['blogurlinput']
+
 		if not blogurlinput:
 			return render_template('addpage.html', added = 'URL cannot be empty')
+
+		if Blog.query.filter_by(url = blogurlinput).first():
+			return render_template('addpage.html', added = 'Page exists.')
+
 		blogtitleinput = request.form['blogtitleinput']
 		blogdescinput = request.form['blogdescinput']
 		bloglayoutinput = request.form['bloglayoutinput']
