@@ -4,9 +4,6 @@ from flask import *
 from pub import *
 from setup import *
 
-preview = None
-content = None
-
 @app.route("/login", methods = ['GET','POST'])
 
 def login():
