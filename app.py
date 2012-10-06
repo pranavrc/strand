@@ -3,6 +3,7 @@
 from flask import *
 from pub import *
 from setup import *
+import re
 
 @app.route("/login", methods = ['GET','POST'])
 
@@ -36,9 +37,9 @@ def addPage():
 	if request.method == 'POST':
 		if 'username' in session:
 			blogurlinput = request.form['blogurlinput']
-
-			if not blogurlinput:
-				return render_template('addpage.html', added = 'URL cannot be empty')
+			
+			if not blogurlinput or not regmatch(blogurlinput):
+				return render_template('addpage.html', added = 'Invalid URL. Cannot contain special characters other than underscore.')
 
 			if Blog.query.filter_by(url = blogurlinput).first():
 				return render_template('addpage.html', added = 'Page exists.')
@@ -118,7 +119,10 @@ def not_found(error):
 @app.teardown_request
 
 def shutdown_session(exception=None):
-    db.session.remove()
+	db.session.remove()
+
+def regmatch(urlinput, isPresent = re.compile(r'[^a-z0-9_]').search):
+	return not bool(isPresent(urlinput))
 
 if __name__ == "__main__":
 	app.run(debug = True)
