@@ -29,33 +29,45 @@ def login():
 
 def addPage():
 	if request.method == 'GET':
-		return render_template('addpage.html')
+		if 'username' in session:
+			return render_template('addpage.html')
+		else:
+			return redirect(url_for('login'))
 	if request.method == 'POST':
-		blogurlinput = request.form['blogurlinput']
+		if 'username' in session:
+			blogurlinput = request.form['blogurlinput']
 
-		if not blogurlinput:
-			return render_template('addpage.html', added = 'URL cannot be empty')
+			if not blogurlinput:
+				return render_template('addpage.html', added = 'URL cannot be empty')
 
-		if Blog.query.filter_by(url = blogurlinput).first():
-			return render_template('addpage.html', added = 'Page exists.')
+			if Blog.query.filter_by(url = blogurlinput).first():
+				return render_template('addpage.html', added = 'Page exists.')
 
-		blogtitleinput = request.form['blogtitleinput']
-		blogdescinput = request.form['blogdescinput']
-		bloglayoutinput = request.form['bloglayoutinput']
-		db.session.add(Blog(blogtitleinput, blogurlinput, bloglayoutinput, blogdescinput))
-		db.session.commit()
-		return render_template('addpage.html', added = blogurlinput)
+			blogtitleinput = request.form['blogtitleinput']
+			blogdescinput = request.form['blogdescinput']
+			bloglayoutinput = request.form['bloglayoutinput']
+			db.session.add(Blog(blogtitleinput, blogurlinput, bloglayoutinput, blogdescinput))
+			db.session.commit()
+			return render_template('addpage.html', added = blogurlinput)
+		else:
+			return redirect(url_for('login'))
 
 @app.route("/remove", methods = ['GET', 'POST'])
 
 def removePage():
 	if request.method == 'GET':
-		return render_template('removepage.html', blogs = Blog.query.all())
+		if 'username' in session:
+			return render_template('removepage.html', blogs = Blog.query.all())
+		else:
+			return redirect(url_for('login'))
 	if request.method == 'POST':
-		blogtoremove = request.form['blogtoremove']
-		db.session.delete(Blog.query.filter_by(url = blogtoremove).first())
-		db.session.commit()
-		return render_template('removepage.html', blogs = Blog.query.all(), removed = blogtoremove)
+		if 'username' in session:
+			blogtoremove = request.form['blogtoremove']
+			db.session.delete(Blog.query.filter_by(url = blogtoremove).first())
+			db.session.commit()
+			return render_template('removepage.html', blogs = Blog.query.all(), removed = blogtoremove)
+		else:
+			return redirect(url_for('login'))
 
 @app.route("/", methods = ['GET','POST'])
 
@@ -66,20 +78,23 @@ def layout():
 		else:
 			return redirect(url_for('login'))
 	if request.method == 'POST':
-		content = request.form['content']
-		preview = request.form['preview']
-		blogtopostto = request.form['listofblogs']
+		if 'username' in session:
+			content = request.form['content']
+			preview = request.form['preview']
+			blogtopostto = request.form['listofblogs']
 
-		if str(preview) == 'True':
-			preview = False
-			return render_template('preview.html', body = content, pub_date = datetime.utcnow())
+			if str(preview) == 'True':
+				preview = False
+				return render_template('preview.html', body = content, pub_date = datetime.utcnow())
 
-		blog = Blog.query.filter_by(url = blogtopostto).first()
-		post = Post(content, blog.url)
-		db.session.add(post)
-		db.session.commit()
+			blog = Blog.query.filter_by(url = blogtopostto).first()
+			post = Post(content, blog.url)
+			db.session.add(post)
+			db.session.commit()
 
-		return '<a href="%s" target="_blank">Published</a>' % url_for('index', blogurl = blogtopostto)
+			return '<a href="%s" target="_blank">Published</a>' % url_for('index', blogurl = blogtopostto)
+		else:
+			return '<a href="%s">Login.</a>' % url_for('login') 
 
 @app.route("/<blogurl>", methods = ['GET'])
 
