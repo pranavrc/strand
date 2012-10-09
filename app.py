@@ -35,7 +35,9 @@ def addPage():
 		else:
 			return redirect(url_for('login'))
 	if request.method == 'POST':
-		if 'username' in session:
+		medium = custompost()
+
+		if 'username' in session or medium:
 			blogurlinput = request.form['blogurlinput']
 			
 			if not blogurlinput or not regmatch(blogurlinput):
@@ -62,7 +64,9 @@ def removePage():
 		else:
 			return redirect(url_for('login'))
 	if request.method == 'POST':
-		if 'username' in session:
+		medium = custompost()
+		
+		if 'username' in session or medium:
 			blogtoremove = request.form['blogtoremove']
 			db.session.delete(Blog.query.filter_by(url = blogtoremove).first())
 			db.session.commit()
@@ -79,7 +83,9 @@ def layout():
 		else:
 			return redirect(url_for('login'))
 	if request.method == 'POST':
-		if 'username' in session:
+		medium = custompost()
+		
+		if 'username' in session or medium:
 			content = request.form['content']
 			preview = request.form['preview']
 			blogtopostto = request.form['listofblogs']
@@ -123,6 +129,19 @@ def shutdown_session(exception=None):
 
 def regmatch(urlinput, isPresent = re.compile(r'[^a-z0-9_]').search):
 	return not bool(isPresent(urlinput))
+
+def custompost():
+	medium = True
+
+	try:
+		if User.query.filter_by(password = request.form['password']).first():
+			pass
+		else:
+			medium = False
+	except:
+		medium = False
+
+	return medium
 
 if __name__ == "__main__":
 	app.run(debug = True)
