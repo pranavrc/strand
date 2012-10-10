@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+import sys
+import urllib
+import urllib2
+
+class clpost:
+	def __init__(self, url):
+		self.url = url
+		
+	def post(self, url, params):
+		data = urllib.urlencode(params)
+		req = urllib2.Request(url, data)
+		req.add_header("Content-type", "application/x-www-form-urlencoded")
+		response = urllib2.urlopen(req).read()
+		print response
+
+	def write(self):
+		url = self.url
+
+		print 'Create a new post:\n'
+		content = str(raw_input("Content to post: "))
+		blogtopostto = str(raw_input("Blog URL: "))
+		password = str(raw_input("Password: "))
+		params = {'content': content, 'preview': 'False', 'listofblogs': blogtopostto, 'password': password}
+		self.post(url, params)
+
+	def addPage(self):
+		url = self.url + 'add'
+
+		print 'Create a new page:\n'
+		blogurl = str(raw_input("Blog URL: "))
+		title = str(raw_input("Blog title: "))
+		desc = str(raw_input("Blog description: "))
+		layout = str(raw_input("Blog layout (Bottom-to-Top = 1 and Top-to-Bottom = 0): "))
+		password = str(raw_input("Password: "))
+		params = {'blogurlinput': blogurl, 'blogtitleinput': title, 'blogdescinput': desc, 'bloglayoutinput': layout, 'password': password}
+		self.post(url, params)
+
+	def removePage(self):
+		url = self.url + 'remove'
+
+		print 'Remove existing page:\n'
+		blogurl = str(raw_input("Blog URL: "))
+		password = str(raw_input("Password: "))
+		params = {'blogtoremove': blogurl, 'password': password}
+		self.post(url, params)
+
+if __name__ == "__main__":
+	helpmsg = "Usage: clpost <action>\nactions:\n\t1 - Post, 2 - Add Page, 3 - Remove Page."
+
+	if len(sys.argv) != 2 or int(sys.argv[1]) not in (1, 2, 3):
+		print helpmsg
+		sys.exit(1)
+
+	action = int(sys.argv[1])
+
+	url = str(raw_input('Enter root URL: '))
+	psession = clpost(url)
+
+	if action == 1:
+		psession.write()
+	elif action == 2:
+		psession.addPage()
+	elif action == 3:
+		psession.removePage()
