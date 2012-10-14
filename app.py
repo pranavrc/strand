@@ -51,7 +51,11 @@ def addPage():
 			bloglayoutinput = request.form['bloglayoutinput']
 			db.session.add(Blog(blogtitleinput, blogurlinput, bloglayoutinput, blogdescinput))
 			db.session.commit()
-			return render_template('addpage.html', added = blogurlinput)
+
+			if not medium:
+				return render_template('addpage.html', added = blogurlinput)
+			else:
+				return 'Added.'
 		else:
 			return redirect(url_for('login'))
 
@@ -70,7 +74,11 @@ def removePage():
 			blogtoremove = request.form['blogtoremove']
 			db.session.delete(Blog.query.filter_by(url = blogtoremove).first())
 			db.session.commit()
-			return render_template('removepage.html', blogs = Blog.query.all(), removed = blogtoremove)
+
+			if not medium:
+				return render_template('removepage.html', blogs = Blog.query.all(), removed = blogtoremove)
+			else:
+				return 'Removed.'
 		else:
 			return redirect(url_for('login'))
 
@@ -98,8 +106,11 @@ def layout():
 			post = Post(content, blog.url)
 			db.session.add(post)
 			db.session.commit()
-
-			return '<a href="%s" target="_blank">Published</a>' % url_for('index', blogurl = blogtopostto)
+			
+			if not medium:
+				return '<a href="%s" target="_blank">Published</a>' % url_for('index', blogurl = blogtopostto)
+			else:
+				return 'Published.'
 		else:
 			return '<a href="%s">Login.</a>' % url_for('login') 
 
