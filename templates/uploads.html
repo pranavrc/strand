@@ -12,9 +12,7 @@
 			<p>
 			{% if uploadList %}
 				{% for eachUpload in uploadList %}
-					<form method="GET" id="{{ eachUpload }}" action="/uploads/{{ eachUpload }}">
-						<a href="javascript:{}" onclick="document.getElementById('{{ eachUpload }}').submit(); return false;">{{ eachUpload }}</a>
-					</form>
+					<a href="uploads/{{ eachUpload }}">{{ eachUpload }}</a>
 				{% endfor %}
 			{% else %}
 				No uploads so far.
