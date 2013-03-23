@@ -10,11 +10,15 @@
 	<body>
 		<div class="content">
 			<p>
-			{% for eachUpload in uploadList %}
-			<form method="GET" id="{{ eachUpload }}" action="/uploads/{{ eachUpload }}">
-				<a href="javascript:{}" onclick="document.getElementById('{{ eachUpload }}').submit(); return false;">{{ eachUpload }}</a>
-			</form>
-			{% endfor %}
+			{% if uploadList %}
+				{% for eachUpload in uploadList %}
+					<form method="GET" id="{{ eachUpload }}" action="/uploads/{{ eachUpload }}">
+						<a href="javascript:{}" onclick="document.getElementById('{{ eachUpload }}').submit(); return false;">{{ eachUpload }}</a>
+					</form>
+				{% endfor %}
+			{% else %}
+				No uploads so far.
+			{% endif %}
 			</p>
 		</div>
 	</body>
