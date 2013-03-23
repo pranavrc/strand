@@ -159,6 +159,15 @@ def uploadedContent(filename):
     else:
         return redirect(url_for('login'))
 
+@app.route('/remove/<filename>', methods = ['GET'])
+
+def removeContent(filename):
+    if 'username' in session:
+        os.remove('uploads/' + filename)
+        return redirect(url_for('uploads'))
+    else:
+        return redirect(url_for('login'))
+
 @app.errorhandler(404)
 
 def not_found(error):
