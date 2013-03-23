@@ -12,7 +12,7 @@
 			<p>
 			{% if uploadList %}
 				{% for eachUpload in uploadList %}
-					<a href="uploads/{{ eachUpload }}">{{ eachUpload }}</a>
+					<a href="uploads/{{ eachUpload }}">{{ eachUpload }}</a> | <a href="remove/{{ eachUpload }}" onclick="return confirm('Sure?');">Delete</a>
 				{% endfor %}
 			{% else %}
 				No uploads so far.
