@@ -1,25 +1,25 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>
-<title>{{blogtitle}}</title>
-<meta charset="utf-8">
-<link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
-</head>
+	<head>
+		<title>{{blogtitle}}</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+	</head>
 
-<body>
-<div class="header"><p>{{blogtitle}}</p></div>
-<div class="description"><p>{{blogdescription}}</p></div><hr />
-{% for post in posts %}
-	{% if post.body %}
- 		{% include 'post.html' %}
-	{% endif %}
-{% endfor %}
-<hr />
-<p style="text-align:center;">
-{% for caption, link in footerContent.items() %}
-	| <a href="{{ link }}" onclick="window.open(this.href);return false;">{{ caption }}</a> |
-{% endfor %}
-</p>
-</body>
+	<body>
+		<div class="header"><p>{{blogtitle}}</p></div>
+		<div class="description"><p>{{blogdescription}}</p></div><hr />
+		{% for post in posts %}
+		{% if post.body %}
+		{% include 'post.html' %}
+		{% endif %}
+		{% endfor %}
+		<hr />
+		<p style="text-align:center;">
+		{% for caption, link in footerContent.items() %}
+		| <a href="{{ link }}" onclick="window.open(this.href);return false;">{{ caption }}</a> |
+		{% endfor %}
+		</p>
+	</body>
 </html>

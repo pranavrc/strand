@@ -1,83 +1,82 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>
-<title>
-Add Content
-</title>
-<meta charset="utf-8">
-<link href="{{url_for('static',filename='layout.css')}}" rel="stylesheet" type="text/css" />
+	<head>
+		<title>
+			Add Content
+		</title>
+		<meta charset="utf-8">
+		<link href="{{url_for('static',filename='layout.css')}}" rel="stylesheet" type="text/css" />
 
-</head>
+	</head>
 
-<body>
+	<body>
 
-<div class="formDiv">
-<form id="contentpush" action="/" onsubmit="return submitForm();" method="POST">
-<textarea class="submitText" name="content" placeholder="Type Content."></textarea>
-<br />
-<br />
-<select class="selectlist" name="listofblogs">
-	{% for blog in blogs %}
-	<option value="{{blog.url}}">{{blog.url}}</option>
-	{% endfor %}
-</select>
-<br /><br />
-<input class="previewBtn" type="submit" value="Preview" disabled="disabled" />
-<input class="submitBtn" type="submit" value="Publish" disabled="disabled" onClick="return submitForm();" />
-</form>
-</div>
-<br />
-<div class="pubContent"></div>
-<hr />
-<p style="text-align:center;">
-<a href="/add" target="_blank">Add Page</a> | <a href="/remove" target="_blank">Remove Page</a> | <a href="/uploads" target="_blank">Uploads</a><br />
-<form action="/uploads" method=post enctype=multipart/form-data>
-	<p>
-	<input type=file name=file>
-	<input type=submit value=Upload>
-	</p>
-</form>
+		<div class="formDiv">
+			<form id="contentpush" action="/" onsubmit="return submitForm();" method="POST">
+				<textarea class="submitText" name="content" placeholder="Type Content."></textarea>
+				<br />
+				<br />
+				<select class="selectlist" name="listofblogs">
+					{% for blog in blogs %}
+					<option value="{{blog.url}}">{{blog.url}}</option>
+					{% endfor %}
+				</select>
+				<br /><br />
+				<input class="previewBtn" type="submit" value="Preview" disabled="disabled" />
+				<input class="submitBtn" type="submit" value="Publish" disabled="disabled" onClick="return submitForm();" />
+			</form>
+			<form action="/uploads" method=post enctype=multipart/form-data>
+				<p>
+				<input type=file name=file>
+				<input type=submit value=Upload>
+				</p>
+			</form>
+		</div>
+		<br />
+		<div class="pubContent"></div>
+		<hr />
+		<p style="text-align:center;">
+		<a href="/add" target="_blank">Add Page</a> | <a href="/remove" target="_blank">Remove Page</a> | <a href="/uploads" target="_blank">Uploads</a><br />
+		</p>
 
-</p>
-
-<script type="text/javascript" src="{{url_for('static',filename='jquery-1.7.2.js')}}"></script>
-<!--script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script-->
-<script type="text/javascript">
-	/*<![CDATA[*/
-	function submitForm() {
-		if (confirm("Sure?")) {
-		  $('div.pubContent').html('<img src="{{url_for('static',filename='loader.gif')}}" alt="Publishing..." />');
-		  $.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=False", success: function(response) {
-			  $('div.pubContent').html(response);
-		  }});
+		<script type="text/javascript" src="{{url_for('static',filename='jquery-1.7.2.js')}}"></script>
+		<!--script type="text/javascript" src="{{ url_for('static', filename='jquery.watermarkinput.js') }}"></script-->
+		<script type="text/javascript">
+		/*<![CDATA[*/
+		function submitForm() {
+			if (confirm("Sure?")) {
+				$('div.pubContent').html('<img src="{{url_for('static',filename='loader.gif')}}" alt="Publishing..." />');
+				$.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=False", success: function(response) {
+						$('div.pubContent').html(response);
+						}});
+			}
+			return false;
 		}
-	    return false;
-       }
 
-	$(document).ready(function(){
+		$(document).ready(function(){
 		$('input[class=previewBtn]').click(function(){
 			$.ajax({type:'POST', url: '/', data:$('#contentpush').serialize() + "&preview=True", success: function(response) {
-			  $('div.pubContent').html(response);
-		  }});
-		  return false;
-		});
+				$('div.pubContent').html(response);
+				}});
+			return false;
+			});
 
-                /*jQuery(function($){
-	        $('.submitText').Watermark("Type Content to be published.");
-		});*/
+		/*jQuery(function($){
+		  $('.submitText').Watermark("Type Content to be published.");
+		  });*/
 
-    		$(".submitBtn, .previewBtn").attr("disabled", "true");
+		$(".submitBtn, .previewBtn").attr("disabled", "true");
 		$(".submitText").keyup(function(){
-	        if (($(this).val() != "") && $('.selectlist').val()) {
-        	    $(".submitBtn, .previewBtn").removeAttr("disabled");
-	        } else {
-	            $(".submitBtn, .previewBtn").attr("disabled", "true");
-	        }
+			if (($(this).val() != "") && $('.selectlist').val()) {
+			$(".submitBtn, .previewBtn").removeAttr("disabled");
+			} else {
+			$(".submitBtn, .previewBtn").attr("disabled", "true");
+			}
+			});
 		});
-	});
-	/*]]>*/
-</script>
+		/*]]>*/
+		</script>
 
-</body>
+	</body>
 </html>
