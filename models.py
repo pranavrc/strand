@@ -3,8 +3,14 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask
 import os
 import sys
+from werkzeug import secure_filename
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'wav', 'mp3', 'ogg'])
 
 app = Flask(__name__, template_folder = 'templates')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 DB_URI = 'tmp/data.db'
 basedir = os.path.abspath(os.path.dirname(__file__))

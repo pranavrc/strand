@@ -4,6 +4,7 @@ from flask import *
 from pub import *
 from setup import *
 import re
+import os
 
 @app.route("/login", methods = ['GET','POST'])
 
@@ -129,6 +130,31 @@ def index(blogurl):
 
     return render_template('index.html', blogtitle = eachblog.title, blogdescription = eachblog.description, posts = contentPosts, \
                             footerContent = footer.footerContent)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@app.route('/uploads', methods = ['GET', 'POST'])
+
+def uploads():
+    if request.method == 'GET':
+        if 'username' in session:
+            return render_template('uploads.html', uploadList = os.listdir(app.config['UPLOAD_FOLDER']))
+        else:
+            return redirect(url_for('login'))
+    if request.method == 'POST':
+        uploadContent = request.files['file']
+        if uploadContent and allowed_file(uploadContent.filename):
+            filename = secure_filename(uploadContent.filename)
+            uploadContent.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploads', filename = filename))
+
+@app.route('/uploads/<filename>', methods = ['GET'])
+
+def uploadedContent(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.errorhandler(404)
 
