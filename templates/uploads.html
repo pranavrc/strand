@@ -12,12 +12,21 @@
 			<p>
 			{% if uploadList %}
 			{% for eachUpload in uploadList %}
-			<a href="uploads/{{ eachUpload }}">{{ eachUpload }}</a> | <a href="remove/{{ eachUpload }}" onclick="return confirm('Sure?');">Delete</a>
+			<a href="uploads/{{ eachUpload }}">{{ eachUpload }}</a> | <a href="remove/{{ eachUpload }}" onclick="return confirm('Sure?');">Delete</a><br />
 			{% endfor %}
 			{% else %}
 			No uploads so far.
 			{% endif %}
 			</p>
+		</div><br />
+		<div class="uploadDiv">
+			<form action="/uploads" method=post enctype=multipart/form-data>
+			<p>
+				<input type=file name=file>
+				<input type=submit value=Upload>
+			</p>
+			</form>
 		</div>
+		
 	</body>
 </html>
