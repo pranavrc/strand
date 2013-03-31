@@ -5,77 +5,79 @@ import urllib
 import urllib2
 
 class clpost:
-	def __init__(self, url, password):
-		self.url = url
-		self.password = password
-		
-	def post(self, url, params):
-		data = urllib.urlencode(params)
-		req = urllib2.Request(url, data)
-		req.add_header("Content-type", "application/x-www-form-urlencoded")
-		response = urllib2.urlopen(req).read()
-		print response
+    def __init__(self, url, password):
+        self.url = url
+        self.password = password
+        
+    def post(self, url, params):
+        data = urllib.urlencode(params)
+        req = urllib2.Request(url, data)
+        req.add_header("Content-type", "application/x-www-form-urlencoded")
+        response = urllib2.urlopen(req).read()
+        print response
 
-	def write(self):
-		url = self.url
+    def write(self):
+        url = self.url
 
-		print '\t-Create a new post-'
-		content = str(raw_input("Content to post: "))
-		blogtopostto = str(raw_input("Blog URL: "))
-		params = {'content': content, 'preview': 'False', 'listofblogs': blogtopostto, 'password': self.password}
-		self.post(url, params)
+        print '\t-Create a new post-'
+        content = str(raw_input("Content to post: "))
+        blogtopostto = str(raw_input("Blog URL: "))
+        params = {'content': content, 'preview': 'False', 'listofblogs': blogtopostto, 'password': self.password}
+        self.post(url, params)
 
-	def addPage(self):
-		url = self.url + 'add'
+    def addPage(self):
+        url = self.url + 'add'
 
-		print '\t-Create a new page-'
-		blogurl = str(raw_input("Blog URL: "))
-		title = str(raw_input("Blog title: "))
-		desc = str(raw_input("Blog description: "))
-		layout = str(raw_input("Blog layout (Bottom-to-Top = 1 and Top-to-Bottom = 0): "))
-		params = {'blogurlinput': blogurl, 'blogtitleinput': title, 'blogdescinput': desc, 'bloglayoutinput': layout, 'password': self.password}
-		self.post(url, params)
+        print '\t-Create a new page-'
+        blogurl = str(raw_input("Blog URL: "))
+        title = str(raw_input("Blog title: "))
+        desc = str(raw_input("Blog description: "))
+        layout = str(raw_input("Blog layout (Bottom-to-Top = 1 and Top-to-Bottom = 0): "))
+        params = {'blogurlinput': blogurl, 'blogtitleinput': title, 'blogdescinput': desc, 'bloglayoutinput': layout, 'password': self.password}
+        self.post(url, params)
 
-	def removePage(self):
-		url = self.url + 'remove'
+    def removePage(self):
+        url = self.url + 'remove'
 
-		print '\t-Remove existing page-'
-		blogurl = str(raw_input("Blog URL: "))
-		params = {'blogtoremove': blogurl, 'password': self.password}
-		self.post(url, params)
+        print '\t-Remove existing page-'
+        blogurl = str(raw_input("Blog URL: "))
+        params = {'blogtoremove': blogurl, 'password': self.password}
+        self.post(url, params)
 
-	def command(self, action):
-		if action == 1 or action == 'write':
-			self.write()
-		elif action == 2 or action == 'add':
-			self.addPage()
-		elif action == 3 or action == 'remove':
-			self.removePage()
-			
+    def command(self, action):
+        if action == 1 or action == 'write':
+            self.write()
+        elif action == 2 or action == 'add':
+            self.addPage()
+        elif action == 3 or action == 'remove':
+            self.removePage()
+            
 if __name__ == "__main__":
-	helpmsg = "Usage: clpost <action>\nactions:\n\t1 - Post, 2 - Add Page, 3 - Remove Page."
-	clihelp = "Commands:\n\twrite - to make a post.\n\tadd - to add a page.\n\tremove - to remove a page.\n\texit - Exit the loop.\n\thelp - Display this."
-	
-	url = str(raw_input('Enter root URL: '))
-	password = str(raw_input('Enter password: '))
-	psession = clpost(url, password)
-	
-	if len(sys.argv) == 1:
-		while True:
-			action = str(raw_input(">>> "))
+    helpmsg = "Usage: clpost <action>\nactions:\n\t1 - Post, 2 - Add Page, 3 - Remove Page."
+    clihelp = "Commands:\n\twrite - to make a post.\n\tadd - to add a page.\n\tremove - to remove a page.\n\texit - Exit the loop.\n\thelp - Display this."
+    
+    url = str(raw_input('Enter root URL: '))
+    url += '/' if url[-1] != '/' else '' 
+    print url
+    password = str(raw_input('Enter password: '))
+    psession = clpost(url, password)
+    
+    if len(sys.argv) == 1:
+        while True:
+            action = str(raw_input(">>> "))
 
-			if action in ('write', 'add', 'remove'):
-				psession.command(action)
-				continue
-			elif action == 'exit':
-				sys.exit(1)
-			else:
-				print clihelp
-				continue
-	elif len(sys.argv) == 2:
-		action = int(sys.argv[1])
-		if action in (1, 2, 3):
-			psession.command(action)
-		else:
-			print helpmsg
-			sys.exit(1)
+            if action in ('write', 'add', 'remove'):
+                psession.command(action)
+                continue
+            elif action == 'exit':
+                sys.exit(1)
+            else:
+                print clihelp
+                continue
+    elif len(sys.argv) == 2:
+        action = int(sys.argv[1])
+        if action in (1, 2, 3):
+            psession.command(action)
+        else:
+            print helpmsg
+            sys.exit(1)
