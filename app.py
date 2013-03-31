@@ -27,6 +27,15 @@ def login():
 
         return render_template('login.html', error = error)
 
+@app.route("/logout", methods = ['GET', 'POST'])
+
+def logout():
+    if request.method == 'GET':
+        if 'username' in session:
+            del session['username']
+
+        return redirect(url_for('login'))
+
 @app.route("/add", methods = ['GET','POST'])
 
 def addPage():
