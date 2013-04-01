@@ -163,10 +163,7 @@ def uploads():
 @app.route('/uploads/<filename>', methods = ['GET'])
 
 def uploadedContent(filename):
-    if 'username' in session:
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-    else:
-        return redirect(url_for('login'))
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/remove/<filename>', methods = ['GET'])
 
