@@ -28,11 +28,12 @@ class Footer(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), unique = True)
-    password = db.Column(db.String(100), unique = False)
+    password_hash = db.Column(db.String(500), unique = False)
 
     def __init__(self, username, password):
+        import hashlib
         self.username = username
-        self.password = password
+        self.password_hash = hashlib.md5(password + app.secret_key).hexdigest()
 
     def __repr__(self):
         return '%r' % self.username
