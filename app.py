@@ -1,10 +1,14 @@
 #!/usr/bin/python
 
+# Looks like I had crappy import practices.
 from flask import *
 from pub import *
 from setup import *
+
 import re
 import os
+import hashlib
+from models import app
 
 @app.route("/login", methods = ['GET','POST'])
 
@@ -13,10 +17,10 @@ def login():
         return render_template('login.html')
     if request.method == 'POST':
         usern = request.form['username']
-        passw = request.form['password']
+        passw_hash = hashlib.md5(request.form['password'] + app.secret_key).hexdigest()
 
         if User.query.filter_by(username = usern).first():
-            if User.query.filter_by(password = passw).first():
+            if User.query.filter_by(password_hash = passw_hash).first():
                 flash('Successful login.')
                 session['username'] = usern
                 return redirect(url_for('layout'))
