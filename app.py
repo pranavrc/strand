@@ -183,6 +183,11 @@ def removeContent(filename):
 def not_found(error):
     return redirect('https://www.google.com/search?q=404')
 
+@app.errorhandler(500)
+
+def ISE(request):
+    return 'Oopsy daisy. Something went wrong.'
+
 @app.teardown_request
 
 def shutdown_session(exception=None):
