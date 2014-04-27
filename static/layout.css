@@ -68,7 +68,11 @@ a {
 }
 
 a:link {
-	color: black;
+	color: #800000;
+}
+
+a:visited {
+    color: #696969;
 }
 
 fieldset {
